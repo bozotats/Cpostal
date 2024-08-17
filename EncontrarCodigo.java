@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.System.*;
 
 public class EncontrarCodigo {
     public static void main(String[] args) throws Exception {
@@ -8,18 +7,27 @@ public class EncontrarCodigo {
             System.out.println("Error: no se introducio ningun argumento, vuelva a intentar");
             System.exit(1);
         }
-        
+
+        try {
         File csv = new File("./codigos_postales.csv");
+
         BufferedReader br = new BufferedReader(new FileReader(csv));
         String currentline;
         while ((currentline = br.readLine()) != null) {
-            String[] data = currentline.split(",");
+            String[] columnas = currentline.split(",");
             for (String codigo: args) {
-                if (data[0].equals(codigo)) {
-                    System.out.println("Codigo Postal: " + data[0] + " - " + data[1]);
+                if (columnas[0].equals(codigo)) {
+                    System.out.println("Codigo Postal: " + columnas[0] + " - " + columnas[1]);
                 }
 
             }
+        }
+
+        br.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Archivo no encontrado");
+            System.exit(1);
         }
     }
 }
